@@ -74,7 +74,11 @@ def _create_id(length, value):
 
 def create_id():
     pid = os.getpid()
-    thread_id = threading.get_native_id()
+    try:
+        thread_id = threading.get_native_id()
+    except AttributeError:
+        # Since this is generally something large, we cut it down to at most 16 bits
+        thread_id = threading.get_ident() % 65536
     return '%s/P:%s%s%s/T:%s%s%s' % (
         _create_id(8, random.randrange(0, 1 << 32)),
         get_color(pid), hex(pid)[2:], NORMAL,
