@@ -77,8 +77,12 @@ def create_id():
     try:
         thread_id = threading.get_native_id()
     except AttributeError:
-        # Since this is generally something large, we cut it down to at most 16 bits
-        thread_id = threading.get_ident() % 65536
+        try:
+            # Since this is generally something large, we cut it down to at most 16 bits
+            thread_id = threading.get_ident() % 65536
+        except AttributeError:
+            # In Python 2.6 and 2.7, we need to cal current_thread().ident instead
+            thread_id = threading.current_thread().ident % 65536
     return '%s/P:%s%s%s/T:%s%s%s' % (
         _create_id(8, random.randrange(0, 1 << 32)),
         get_color(pid), hex(pid)[2:], NORMAL,
