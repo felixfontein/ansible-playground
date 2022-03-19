@@ -1,4 +1,6 @@
 # Felix's Playground Collection
+[![CI](https://github.com/felixfontein/ansible-playground/workflows/CI/badge.svg?event=push)](https://github.com/felixfontein/ansible-playground/actions)
+[![Codecov](https://img.shields.io/codecov/c/github/felixfontein/ansible-playground)](https://codecov.io/gh/felixfontein/ansible-playground)
 
 This is for testing random things.
 
