@@ -132,7 +132,6 @@ jobs:
         ansible:
           - devel
         python:
-          - '2.6'
           - '2.7'
           - '3.5'
           - '3.6'
@@ -161,7 +160,7 @@ jobs:
             python: '3.6'
           # ansible-core 2.12
           - ansible: stable-2.12
-            python: '2.7'
+            python: '2.6'
           - ansible: stable-2.12
             python: '3.8'
 
