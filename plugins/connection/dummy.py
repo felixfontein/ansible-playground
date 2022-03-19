@@ -43,6 +43,7 @@ import os
 import os.path
 import random
 import shutil
+import threading
 
 from ansible.errors import AnsibleFileNotFound, AnsibleConnectionFailure
 from ansible.module_utils.common.text.converters import to_bytes, to_native, to_text
@@ -53,14 +54,44 @@ from ansible.utils.display import Display
 display = Display()
 
 
+EMPHASIZE = '\033[1m'
+FAINT = '\033[2m'
+NORMAL = '\033[0m'
+
+
+INTERNAL_COUNTER = 0
+INTERNAL_COUNTER_LOCK = threading.Lock()
+
+
+def get_color(no):
+    return '\033[%s;%sm' % (30 + no % 8, 40 + (no + 1) % 8)
+
+
+def _create_id(length, value):
+    v = hex(value)[2:]
+    return '%s%s%s%s' % (get_color(value), '0' * (length - len(v)), v, NORMAL)
+
+
 def create_id():
-    length = 8
-    v = hex(random.randrange(0, 1 << (4 * length)))[2:]
-    return '[%s%s]' % ('0' * (length - len(v)), v)
+    return _create_id(8, random.randrange(0, 1 << 32))
+
+
+def create_local_id():
+    global INTERNAL_COUNTER
+
+    with INTERNAL_COUNTER_LOCK:
+        value = INTERNAL_COUNTER
+        INTERNAL_COUNTER += 1
+
+    return _create_id(2, value % 256)
+
+
+def show_message(msg):
+    display.display(msg)
 
 
 plugin_id = create_id()
-display.v('[%s] Plugin loaded' % (plugin_id, ))
+show_message('[%s] Plugin loaded' % (plugin_id, ))
 
 
 class Connection(ConnectionBase):
@@ -70,11 +101,13 @@ class Connection(ConnectionBase):
     has_pipelining = True
 
     def _log(self, msg, **kwargs):
-        display.v('[%s:%s] %s' % (plugin_id, self._id, msg), **kwargs)
+        if 'host' in kwargs:
+            msg = '<%s%s%s> %s' % (EMPHASIZE, kwargs.pop('host'), NORMAL, msg)
+        show_message('[%s:%s] %s' % (plugin_id, self._id, msg), **kwargs)
 
     def __init__(self, play_context, new_stdin, *args, **kwargs):
         super(Connection, self).__init__(play_context, new_stdin, *args, **kwargs)
-        self._id = create_id()
+        self._id = create_local_id()
         self._log('Initialized')
 
         if getattr(self._shell, "_IS_WINDOWS", False):
@@ -88,7 +121,7 @@ class Connection(ConnectionBase):
             host=self.get_option('remote_addr'))
         if not self._connected:
             self._log(
-                'Connecting: user = %r' % (self.get_option('remote_user'), ),
+                'Connecting: user = %s%r%s' % (FAINT, self.get_option('remote_user'), NORMAL),
                 host=self.get_option('remote_addr'))
             self._connected = True
 
@@ -101,8 +134,11 @@ class Connection(ConnectionBase):
         need_stdin = True if (in_data is not None) or do_become else False
 
         self._log(
-            'Executing command: user = %r, command = %r, do_become = %s, need_stdin = %s' % (
-                self.get_option('remote_user'), command, do_become, need_stdin),
+            'Executing command: user = %s%r%s, command = %s%r%s, do_become = %s%s%s, need_stdin = %s%s%s' % (
+                FAINT, self.get_option('remote_user'), NORMAL,
+                FAINT, command, NORMAL,
+                FAINT, do_become, NORMAL,
+                FAINT, need_stdin, NORMAL),
             host=self.get_option('remote_addr'))
 
         # We handle Python detection manually so that it won't error out:
@@ -129,8 +165,11 @@ class Connection(ConnectionBase):
         new_out_path = self._prefix_login_path(out_path)
 
         self._log(
-            'Putting file: user = %r, in_path = %r, out_path = %r, new_out_path = %r' % (
-                self.get_option('remote_user'), in_path, out_path, new_out_path),
+            'Putting file: user = %s%r%s, in_path = %s%r%s, out_path = %s%r%s, new_out_path = %s%r%s' % (
+                FAINT, self.get_option('remote_user'), NORMAL,
+                FAINT, in_path, NORMAL,
+                FAINT, out_path, NORMAL,
+                FAINT, new_out_path, NORMAL),
             host=self.get_option('remote_addr'))
 
     def fetch_file(self, in_path, out_path):
@@ -139,13 +178,16 @@ class Connection(ConnectionBase):
         new_in_path = self._prefix_login_path(in_path)
 
         self._log(
-            'Fetching file: user = %r, in_path = %r, out_path = %r, new_in_path = %r' % (
-                self.get_option('remote_user'), in_path, out_path, new_in_path),
+            'Fetching file: user = %s%r%s, in_path = %s%r%s, out_path = %s%r%s, new_in_path = %s%r%s' % (
+                FAINT, self.get_option('remote_user'), NORMAL,
+                FAINT, in_path, NORMAL,
+                FAINT, out_path, NORMAL,
+                FAINT, new_in_path, NORMAL),
             host=self.get_option('remote_addr'))
 
     def close(self):
         super(Connection, self).close()
         self._log(
-            'Closing connection: user = %r' % (self.get_option('remote_user'), ),
+            'Closing connection: user = %s%r%s' % (FAINT, self.get_option('remote_user'), NORMAL),
             host=self.get_option('remote_addr'))
         self._connected = False
