@@ -73,7 +73,13 @@ def _create_id(length, value):
 
 
 def create_id():
-    return _create_id(8, random.randrange(0, 1 << 32))
+    pid = os.getpid()
+    thread_id = threading.get_native_id()
+    return '%s/P:%s%s%s/T:%s%s%s' % (
+        _create_id(8, random.randrange(0, 1 << 32)),
+        get_color(pid), hex(pid)[2:], NORMAL,
+        get_color(thread_id), hex(thread_id)[2:], NORMAL,
+    )
 
 
 def create_local_id():
@@ -103,7 +109,7 @@ class Connection(ConnectionBase):
     def _log(self, msg, **kwargs):
         if 'host' in kwargs:
             msg = '<%s%s%s> %s' % (EMPHASIZE, kwargs.pop('host'), NORMAL, msg)
-        show_message('[%s:%s] %s' % (plugin_id, self._id, msg), **kwargs)
+        show_message('[%s/C:%s] %s' % (plugin_id, self._id, msg), **kwargs)
 
     def __init__(self, play_context, new_stdin, *args, **kwargs):
         super(Connection, self).__init__(play_context, new_stdin, *args, **kwargs)
