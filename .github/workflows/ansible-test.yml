@@ -146,7 +146,7 @@ jobs:
         include:
           # Ansible 2.9
           - ansible: stable-2.9
-            python: '2.6'
+            python: '2.7'
           - ansible: stable-2.9
             python: '3.5'
           # ansible-base 2.10
