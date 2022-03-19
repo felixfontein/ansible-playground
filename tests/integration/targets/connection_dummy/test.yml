@@ -1,0 +1,20 @@
+- hosts: dummy
+  gather_facts: no
+  serial: 1
+  tasks:
+    - name: Raw with unicode arg and output
+      raw: echo 汉语
+    - name: Command with unicode arg and output
+      command: echo 汉语
+    - name: Start service
+      service:
+        name: foo
+        state: started
+    - name: Start services
+      service:
+        name: '{{ item }}'
+        state: started
+      loop:
+        - foo
+        - bar
+        - baz
