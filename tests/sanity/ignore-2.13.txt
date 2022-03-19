@@ -1,0 +1,4 @@
+# The dummy plugin has stdout output on import. This makes the import sanity test fail.
+plugins/connection/dummy.py import-3.8
+plugins/connection/dummy.py import-3.9
+plugins/connection/dummy.py import-3.10
