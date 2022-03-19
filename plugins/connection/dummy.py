@@ -110,7 +110,7 @@ class Connection(ConnectionBase):
             self._log(
                 'This command is (probably) the Python interpreter discovery; returning canned response',
                 host=self.get_option('remote_addr'))
-            return 0, b'PLATFORM\nFOUND\n/foo/python\nENDFOUND', b''
+            return 0, b'PLATFORM\nImaginary OS\nFOUND\n/foo/python\nENDFOUND', b''
 
         return 0, b'{}', b''
 
