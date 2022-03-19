@@ -16,7 +16,6 @@ dummy-no-pipelining ansible_pipelining=false
 dummy-pipelining    ansible_pipelining=true
 
 [dummy:vars]
-ansible_host=foo
 ansible_connection=felixfontein.playground.dummy
 EOF
 

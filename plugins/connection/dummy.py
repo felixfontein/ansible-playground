@@ -83,10 +83,12 @@ class Connection(ConnectionBase):
 
     def _connect(self, port=None):
         super(Connection, self)._connect()
-        self._log('Connect (_connected=%s)' % self._connected)
+        self._log(
+            'Connect (_connected=%s)' % self._connected,
+            host=self.get_option('remote_addr'))
         if not self._connected:
             self._log(
-                'Connecting: user = %s, host = %s' % (self.get_option('remote_user'), self.get_option('remote_addr')),
+                'Connecting: user = %r' % (self.get_option('remote_user'), ),
                 host=self.get_option('remote_addr'))
             self._connected = True
 
@@ -99,8 +101,8 @@ class Connection(ConnectionBase):
         need_stdin = True if (in_data is not None) or do_become else False
 
         self._log(
-            'Executing command: user = %s, host = %s, command = %r, do_become = %s, need_stdin = %s' % (
-                self.get_option('remote_user'), self.get_option('remote_addr'), command, do_become, need_stdin),
+            'Executing command: user = %r, command = %r, do_become = %s, need_stdin = %s' % (
+                self.get_option('remote_user'), command, do_become, need_stdin),
             host=self.get_option('remote_addr'))
 
         # We handle Python detection manually so that it won't error out:
@@ -127,24 +129,23 @@ class Connection(ConnectionBase):
         new_out_path = self._prefix_login_path(out_path)
 
         self._log(
-            'Putting file: user = %s, host = %s, in_path = %r, out_path = %r, new_out_path = %r' % (
-                self.get_option('remote_user'), self.get_option('remote_addr'), in_path, out_path, new_out_path),
+            'Putting file: user = %r, in_path = %r, out_path = %r, new_out_path = %r' % (
+                self.get_option('remote_user'), in_path, out_path, new_out_path),
             host=self.get_option('remote_addr'))
 
     def fetch_file(self, in_path, out_path):
         super(Connection, self).fetch_file(in_path, out_path)
-        display.vvv("FETCH %s TO %s" % (in_path, out_path), host=self.get_option('remote_addr'))
 
         new_in_path = self._prefix_login_path(in_path)
 
         self._log(
-            'Fetching file: user = %s, host = %s, in_path = %r, out_path = %r, new_in_path = %r' % (
-                self.get_option('remote_user'), self.get_option('remote_addr'), in_path, out_path, new_in_path),
+            'Fetching file: user = %r, in_path = %r, out_path = %r, new_in_path = %r' % (
+                self.get_option('remote_user'), in_path, out_path, new_in_path),
             host=self.get_option('remote_addr'))
 
     def close(self):
         super(Connection, self).close()
         self._log(
-            'Closing connection: user = %s, host = %s' % (self.get_option('remote_user'), self.get_option('remote_addr')),
+            'Closing connection: user = %r' % (self.get_option('remote_user'), ),
             host=self.get_option('remote_addr'))
         self._connected = False
