@@ -1,0 +1,15 @@
+namespace: felixfontein
+name: playground
+version: 0.0.1
+readme: README.md
+authors:
+  - Felix Fontein (https://github.com/felixfontein)
+description: null
+license_file: COPYING
+tags: [felixfontein]
+dependencies: {}
+repository: https://github.com/felixfontein/ansible-playground
+homepage: https://github.com/felixfontein/ansible-playground
+issues: https://github.com/felixfontein/ansible-playground/issues
+build_ignore:
+  - 'felixfontein-playground-*.tar.gz'
