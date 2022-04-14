@@ -64,7 +64,7 @@ jobs:
         working-directory: ./ansible_collections/felixfontein/playground
 
       # See the reports at https://codecov.io/gh/felixfontein/playground
-      - uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: false
 
@@ -121,7 +121,7 @@ jobs:
         working-directory: ./ansible_collections/felixfontein/playground
 
       # See the reports at https://codecov.io/gh/felixfontein/playground
-      - uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: false
 
@@ -211,6 +211,6 @@ jobs:
         working-directory: ./ansible_collections/felixfontein/playground
 
       # See the reports at https://codecov.io/gh/felixfontein/playground
-      - uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: false
