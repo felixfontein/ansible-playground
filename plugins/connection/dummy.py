@@ -43,6 +43,7 @@ import os
 import os.path
 import random
 import shutil
+import sys
 import threading
 
 from ansible.errors import AnsibleFileNotFound, AnsibleConnectionFailure
@@ -105,7 +106,8 @@ def show_message(msg):
 
 
 plugin_id = create_id()
-show_message('[%s] Plugin loaded' % (plugin_id, ))
+if 'ansible-doc' not in sys.argv[0]:
+    show_message('[%s] Plugin loaded' % (plugin_id, ))
 
 
 class Connection(ConnectionBase):
