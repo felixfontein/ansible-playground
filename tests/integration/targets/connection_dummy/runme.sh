@@ -24,5 +24,8 @@ echo "Run tests"
 # Cannot use the standard connection tests, since this plugin doesn't do anything!
 # ./runme-connection.sh "$@"
 
-                ansible-playbook -i test_connection.inventory test.yml "$@"
-LC_ALL=C LANG=C ansible-playbook -i test_connection.inventory test.yml "$@"
+ansible-playbook -i test_connection.inventory test.yml "$@"
+
+if ansible --version | grep ansible | grep -E ' 2\.(9|10|11|12|13)\.'; then
+    LC_ALL=C LANG=C ansible-playbook -i test_connection.inventory test.yml "$@"
+fi
