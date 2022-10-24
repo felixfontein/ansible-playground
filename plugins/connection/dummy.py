@@ -130,6 +130,9 @@ class Connection(ConnectionBase):
             self._log('This is a windows shell; adjusting accordingly')
             self.module_implementation_preferences = ('.ps1', '.exe', '')
 
+    def _test(self):
+        pass
+
     def _connect(self, port=None):
         super(Connection, self)._connect()
         self._log(
