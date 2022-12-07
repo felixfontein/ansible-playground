@@ -41,7 +41,7 @@ jobs:
       ), matrix.ansible) && 'ubuntu-20.04' || 'ubuntu-latest' }}
     steps:
       - name: Perform sanity testing
-        uses: felixfontein/ansible-test-gh-action@change-detection
+        uses: felixfontein/ansible-test-gh-action@integration-error-behavior
         with:
           ansible-core-version: ${{ matrix.ansible }}
           testing-type: sanity
@@ -80,7 +80,7 @@ jobs:
       - name: >-
           Perform unit testing against
           Ansible version ${{ matrix.ansible }}
-        uses: felixfontein/ansible-test-gh-action@change-detection
+        uses: felixfontein/ansible-test-gh-action@integration-error-behavior
         with:
           ansible-core-version: ${{ matrix.ansible }}
           testing-type: units
@@ -158,7 +158,7 @@ jobs:
           Perform integration testing against
           Ansible version ${{ matrix.ansible }}
           under Python ${{ matrix.python }}
-        uses: felixfontein/ansible-test-gh-action@change-detection
+        uses: felixfontein/ansible-test-gh-action@integration-error-behavior
         with:
           ansible-core-version: ${{ matrix.ansible }}
           # NOTE: we're installing with git to work around Galaxy being a huge PITA (https://github.com/ansible/galaxy/issues/2429)
