@@ -38,16 +38,13 @@ options:
             - name: ansible_host
 '''
 
-import io
 import os
 import os.path
 import random
-import shutil
 import sys
 import threading
 
-from ansible.errors import AnsibleFileNotFound, AnsibleConnectionFailure
-from ansible.module_utils.common.text.converters import to_bytes, to_native, to_text
+from ansible.module_utils.common.text.converters import to_text
 from ansible.plugins.connection import ConnectionBase
 from ansible.utils.display import Display
 

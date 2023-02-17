@@ -11,8 +11,6 @@ from ansible_collections.community.internal_test_tools.tests.unit.compat import 
 from ansible.playbook.play_context import PlayContext
 from ansible.plugins.loader import connection_loader
 
-from ansible_collections.felixfontein.playground.plugins.connection.dummy import Connection as DummyConnection
-
 
 class TestDummyConnectionClass(unittest.TestCase):
 
