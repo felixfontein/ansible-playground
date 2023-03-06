@@ -1,5 +1,5 @@
 - hosts: dummy
-  gather_facts: no
+  gather_facts: false
   # serial: 1
   tasks:
     - name: Raw with unicode arg and output
