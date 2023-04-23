@@ -103,7 +103,7 @@ def show_message(msg):
 
 
 plugin_id = create_id()
-if 'ansible-doc' not in sys.argv[0]:
+if all(name not in sys.argv[0] for name in ('importer', 'ansible-doc')):
     show_message('[%s] Plugin loaded' % (plugin_id, ))
 
 
