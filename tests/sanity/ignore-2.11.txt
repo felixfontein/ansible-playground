@@ -1,6 +1,0 @@
-plugins/connection/dummy.py import-2.7  # The dummy plugin has stdout output on import. This makes the import sanity test fail.
-plugins/connection/dummy.py import-3.5  # The dummy plugin has stdout output on import. This makes the import sanity test fail.
-plugins/connection/dummy.py import-3.6  # The dummy plugin has stdout output on import. This makes the import sanity test fail.
-plugins/connection/dummy.py import-3.7  # The dummy plugin has stdout output on import. This makes the import sanity test fail.
-plugins/connection/dummy.py import-3.8  # The dummy plugin has stdout output on import. This makes the import sanity test fail.
-plugins/connection/dummy.py import-3.9  # The dummy plugin has stdout output on import. This makes the import sanity test fail.
