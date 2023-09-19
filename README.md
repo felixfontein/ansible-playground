@@ -6,7 +6,7 @@ This is for testing random things.
 
 ## Tested with Ansible
 
-Ansible 2.9, ansible-base 2.10, ansible-core 2.11, 2.12, and the latest development version.
+Ansible 2.9, ansible-base 2.10, ansible-core 2.11, 2.12, 2.13, 2.14, 2.15, 2.16, and the latest development version.
 
 ## External requirements
 
