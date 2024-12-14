@@ -1,2 +1,17 @@
 ---
 requires_ansible: '>=2.9.10'
+
+plugin_routing:
+  action:
+    foo:
+      deprecation:
+        removal_version: 2.0.0
+        warning_text: Use the 'default' callback plugin with 'display_skipped_hosts
+          = no' and 'display_ok_hosts = no' options.
+    bar:
+      redirect: community.general.shutdown
+  modules:
+    foo:
+      redirect: community.crypto.acme_certificate
+    baz:
+      redirect: community.crypto.x509_certificate
