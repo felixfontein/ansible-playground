@@ -1,3 +1,9 @@
+<!--
+GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
+SPDX-License-Identifier: GPL-3.0-or-later
+SPDX-FileCopyrightText: 2022, Felix Fontein
+-->
+
 # Felix's Playground Collection
 [![CI](https://github.com/felixfontein/ansible-playground/workflows/CI/badge.svg?event=push)](https://github.com/felixfontein/ansible-playground/actions)
 [![Codecov](https://img.shields.io/codecov/c/github/felixfontein/ansible-playground)](https://codecov.io/gh/felixfontein/ansible-playground)
